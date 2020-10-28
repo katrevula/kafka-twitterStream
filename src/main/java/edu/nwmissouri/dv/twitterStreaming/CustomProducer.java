@@ -10,6 +10,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Properties;
 
@@ -62,19 +63,8 @@ public class CustomProducer {
         System.out.println("==========================================");
         System.out.println("\nStarting custom producer..............\n");
 
-        List<Integer> woeids = method();
-
-
-        List<TrendingNow> trendingNowList = method2(1);
-
-
-
-//        for (Integer woeid : woeids) {
-//            method2(woeid);
-//        }
-
-
         Twitter twitter = getTwitterinstance();
+        Trends trends = twitter.getPlaceTrends(1);
         int pageno = 1;
         int i = 1;
         List<Status> statuses = new ArrayList<Status>();
@@ -86,16 +76,8 @@ public class CustomProducer {
             for (Status status : statuses) {
                 String s = "@" + status.getUser().getScreenName() + ":" + status.getText();
                 co = new CustomObject(status.getUser().getScreenName(), status.getText(), status.getText().length());
-                System.out.println("*********sandeep***" + co.toString());
-//
-
-
-//        int d = s.length();
                 System.out.println("Posting tweet number " + i++ + ". See Consumer for details.");
                 ProducerRecord<String, CustomObject> rec = new ProducerRecord<>(topicName, co);
-
-//        ProducerRecord<String, JSONObject> rec = new ProducerRecord<String, JSONObject>(topicName, obj);
-
                 producer.send(rec);
                 Thread.sleep(delay_ms);
             }
@@ -136,7 +118,7 @@ public class CustomProducer {
     }
 
 
-    public static List<Integer> method() {
+    public static List<Integer> getPlaceTrends() {
         List<Integer> list = new ArrayList<>();
 
         try {
@@ -158,7 +140,7 @@ public class CustomProducer {
         return list;
     }
 
-    public static List<TrendingNow> method2(int woe) {
+    public static List<TrendingNow> getAvailableTrends(int woe) {
         List<TrendingNow> trendingNowList = new ArrayList<>();
         try {
             int woeid = woe;
@@ -171,8 +153,6 @@ public class CustomProducer {
                 System.out.println(String.format("%s (tweet_volume: %d)", trend.getName(), trend.getTweetVolume()));
                 trendingNow = new TrendingNow(trend.getName(), trend.getTweetVolume());
                 trendingNowList.add(trendingNow);
-//                System.out.println(String.format("%s (tweet_URL: )", trend.getURL()));
-
             }
 
             System.out.println("done.");

@@ -39,12 +39,4 @@ public class CustomObject {
         this.count = count;
     }
 
-//    @Override
-//    public String toString() {
-//        return "CustomObject{" +
-//                "name='" + name + '\'' +
-//                ", text='" + text + '\'' +
-//                ", count=" + count +
-//                '}';
-//    }
 }
