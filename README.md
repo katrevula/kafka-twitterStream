@@ -2,9 +2,9 @@
 
 Custom Kafka Producer and Consumer apps.
 
-Required Commands to Run Project
+Install Apache Kafka
 
-Apache Kafka
+Run below Commands to start Kafka and Zookeeper
 
 Start Zookeeper:
 zookeeper-server-start /usr/local/etc/kafka/zookeeper.properties
@@ -13,7 +13,10 @@ Start Kafka server:
 kafka-server-start /usr/local/etc/kafka/server.properties
 
 
-To build Project: 
+Commands to Run Project: Use different terminal tabs
+
+Build Project:
+ 
 mvn clean compile assembly:single
 
 Run Producer:
