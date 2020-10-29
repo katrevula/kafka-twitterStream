@@ -15,6 +15,11 @@ public class CustomObject {
         this.count = count;
     }
 
+    public CustomObject(String name, int count) {
+        this.name = name;
+        this.count = count;
+    }
+
     public String getName() {
         return name;
     }

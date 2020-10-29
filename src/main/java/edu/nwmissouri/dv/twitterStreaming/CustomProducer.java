@@ -10,7 +10,6 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Properties;
 
@@ -65,26 +64,44 @@ public class CustomProducer {
 
         Twitter twitter = getTwitterinstance();
         Trends trends = twitter.getPlaceTrends(1);
+
+
         int pageno = 1;
         int i = 1;
         List<Status> statuses = new ArrayList<Status>();
-        try {
-            Paging page = new Paging(pageno, 2000);
-            statuses.addAll(twitter.getUserTimeline(user, page));
-            System.out.println("Total: " + statuses.size());
-            CustomObject co;
-            for (Status status : statuses) {
-                String s = "@" + status.getUser().getScreenName() + ":" + status.getText();
-                co = new CustomObject(status.getUser().getScreenName(), status.getText(), status.getText().length());
-                System.out.println("Posting tweet number " + i++ + ". See Consumer for details.");
+//        try {
+        CustomObject co;
+//            Paging page = new Paging(pageno, 2000);
+//            statuses.addAll(twitter.getUserTimeline(user, page));
+//            System.out.println("Total: " + statuses.size());
+
+        while (true) {
+            int cc =0;
+            for (Trend trend : trends.getTrends()) {
+
+                co = new CustomObject(trend.getName(), trend.getTweetVolume());
+                System.out.println(String.format("Trend "+ i++ +"  %s (tweet_volume: %d)", trend.getName(), trend.getTweetVolume()));
                 ProducerRecord<String, CustomObject> rec = new ProducerRecord<>(topicName, co);
                 producer.send(rec);
-                Thread.sleep(delay_ms);
+
             }
-        } catch (TwitterException e) {
-            e.printStackTrace();
+            Thread.sleep(100);
+//            producer.close();
         }
-        producer.close();
+
+
+//            for (Status status : statuses) {
+//                String s = "@" + status.getUser().getScreenName() + ":" + status.getText();
+//                co = new CustomObject(status.getUser().getScreenName(), status.getText(), status.getText().length());
+//                System.out.println("Posting tweet number " + i++ + ". See Consumer for details.");
+//                ProducerRecord<String, CustomObject> rec = new ProducerRecord<>(topicName, co);
+//                producer.send(rec);
+//                Thread.sleep(delay_ms);
+//            }
+//        } catch (TwitterException e) {
+//            e.printStackTrace();
+//        }
+//        producer.close();
     }
 
     public static Twitter getTwitterinstance() throws IOException {

@@ -95,10 +95,12 @@ public class CustomConsumer {
             try {
                 while (true) {
                     ConsumerRecords<String, CustomObject> records = kafkaConsumer.poll(timeout_ms);
+                    int i=0;
                     for (ConsumerRecord<String, CustomObject> record : records) {
-                        System.out.println(record.value().getName());
-                        System.out.println(record.value().getText());
-                        System.out.println(record.value().getCount());
+                        System.out.println(String.format("Trend "+ i++ +"  %s (tweet_volume: %d)", record.value().getName(), record.value().getCount()));
+//                        System.out.println(record.value().getName());
+//                        System.out.println(record.value().getText());
+//                        System.out.println(record.value().getCount());
                         objectMapper = new ObjectMapper();
                         //  ObjectMapper.writeValue(new File("target/custom.json"), record.value());
                         objectMapper.writeValue(new File("target/custom.json"), record.value());

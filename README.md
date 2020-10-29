@@ -24,3 +24,8 @@ java -cp target/kafka-twitterStreaming-1.0-SNAPSHOT-jar-with-dependencies.jar ed
 
 Run Consumer:
 java -cp target/kafka-twitterStreaming-1.0-SNAPSHOT-jar-with-dependencies.jar edu/nwmissouri/dv/twitterStreaming/CustomConsumer
+
+
+Rockset Run command:
+
+./kafka_2.11-2.3.0/bin/connect-standalone.sh ./connect-standalone.properties ./connect-rockset-sink.properties
