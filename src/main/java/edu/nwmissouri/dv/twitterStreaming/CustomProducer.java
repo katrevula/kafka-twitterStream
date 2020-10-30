@@ -71,25 +71,40 @@ public class CustomProducer {
         List<Status> statuses = new ArrayList<Status>();
 //        try {
         CustomObject co;
-//            Paging page = new Paging(pageno, 2000);
-//            statuses.addAll(twitter.getUserTimeline(user, page));
-//            System.out.println("Total: " + statuses.size());
+        TrendingNow trendingNow;
+
+
 
         while (true) {
             int cc =0;
             for (Trend trend : trends.getTrends()) {
 
-                co = new CustomObject(trend.getName(), trend.getTweetVolume());
-                System.out.println(String.format("Trend "+ i++ +"  %s (tweet_volume: %d)", trend.getName(), trend.getTweetVolume()));
+                trendingNow = new TrendingNow(trend.getName(),trend.getTweetVolume());
+
+                co = new CustomObject(trendingNow);
+                System.out.println(String.format("Trend "+ i++ +"  %s (tweet_volume: %d)", co.getTrendingNow().getName(),co.getTrendingNow().getVolume()));
                 ProducerRecord<String, CustomObject> rec = new ProducerRecord<>(topicName, co);
                 producer.send(rec);
-
             }
-            Thread.sleep(100);
+            Thread.sleep(1000);
 //            producer.close();
         }
 
+//        while (true) {
+//            int cc =0;
+//            for (Trend trend : trends.getTrends()) {
+//                co = new CustomObject(trend.getName(), trend.getTweetVolume());
+//                System.out.println(String.format("Trend "+ i++ +"  %s (tweet_volume: %d)", trend.getName(), trend.getTweetVolume()));
+//                ProducerRecord<String, CustomObject> rec = new ProducerRecord<>(topicName, co);
+//                producer.send(rec);
+//            }
+//            Thread.sleep(100);
+////            producer.close();
+//        }
 
+//            Paging page = new Paging(pageno, 2000);
+//            statuses.addAll(twitter.getUserTimeline(user, page));
+//            System.out.println("Total: " + statuses.size());
 //            for (Status status : statuses) {
 //                String s = "@" + status.getUser().getScreenName() + ":" + status.getText();
 //                co = new CustomObject(status.getUser().getScreenName(), status.getText(), status.getText().length());

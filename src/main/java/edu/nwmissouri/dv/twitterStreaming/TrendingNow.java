@@ -17,6 +17,14 @@ public class TrendingNow {
         this.name = name;
     }
 
+    @Override
+    public String toString() {
+        return "TrendingNow{" +
+                "name='" + name + '\'' +
+                ", volume=" + volume +
+                '}';
+    }
+
     public int getVolume() {
         return volume;
     }
