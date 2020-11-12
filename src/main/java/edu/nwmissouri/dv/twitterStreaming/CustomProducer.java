@@ -64,7 +64,14 @@ public class CustomProducer {
 
         Twitter twitter = getTwitterinstance();
         Trends trends = twitter.getPlaceTrends(1);
-
+// **************************************************************************************//
+        ResponseList<Location> locations;
+        locations = twitter.getAvailableTrends();
+        System.out.println("Showing available trends");
+        for (Location location : locations) {
+            System.out.println(location.getName() + " (woeid:" + location.getWoeid() + ")");
+        }
+// **************************************************************************************//
 
         int pageno = 1;
         int i = 1;
@@ -82,7 +89,7 @@ public class CustomProducer {
 //                trendingNow = new TrendingNow(trend.getName(),trend.getTweetVolume());
 
                 co = new CustomObject(i, trend.getName(),trend.getTweetVolume());
-                System.out.println(String.format("Trend "+ i++ +"  %s (tweet_volume: %d)", co.getName(),co.getTweetCount()));
+//                System.out.println(String.format("Trend "+ i++ +"  %s (tweet_volume: %d)", co.getName(),co.getTweetCount()));
                 ProducerRecord<String, CustomObject> rec = new ProducerRecord<>(topicName, co);
                 producer.send(rec);
             }

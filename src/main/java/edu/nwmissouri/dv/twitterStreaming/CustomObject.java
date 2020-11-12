@@ -6,7 +6,23 @@ public class CustomObject {
     private String name;
 //    private String text;
     private int tweetCount;
-//    private TrendingNow trendingNow;
+    private String countryName;
+
+    public CustomObject(int top, String name, int tweetCount, String countryName) {
+        this.top = top;
+        this.name = name;
+        this.tweetCount = tweetCount;
+        this.countryName = countryName;
+    }
+
+    public String getCountryName() {
+        return countryName;
+    }
+
+    public void setCountryName(String countryName) {
+        this.countryName = countryName;
+    }
+    //    private TrendingNow trendingNow;
 //
 //    public CustomObject(TrendingNow trendingNow) {
 //        this.trendingNow = trendingNow;
