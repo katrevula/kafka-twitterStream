@@ -98,9 +98,8 @@ public class CustomConsumer {
                     int i = 0;
                     for (ConsumerRecord<String, CustomObject> record : records) {
 
-                        System.out.println(record.value().getName());
-                        System.out.println(record.value().getCount());
-                        System.out.println("************"+record.value().toString());
+                        System.out.println("# "+record.value().getTop()+"    Trend: " +record.value().getName() +"  TweetCount: "+record.value().getTweetCount());
+//                        System.out.println("************"+record.value().toString());
 
                         objectMapper = new ObjectMapper();
                         //  ObjectMapper.writeValue(new File("target/custom.json"), record.value());

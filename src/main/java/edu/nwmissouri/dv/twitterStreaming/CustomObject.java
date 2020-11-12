@@ -2,9 +2,10 @@ package edu.nwmissouri.dv.twitterStreaming;
 
 public class CustomObject {
 
+    private int top;
     private String name;
 //    private String text;
-    private int count;
+    private int tweetCount;
 //    private TrendingNow trendingNow;
 //
 //    public CustomObject(TrendingNow trendingNow) {
@@ -35,11 +36,27 @@ public class CustomObject {
 //        this.count = count;
 //    }
 //
-    public CustomObject(String name, int count) {
+//    public CustomObject(String name, int tweetCount) {
+//        this.name = name;
+//        this.tweetCount = tweetCount;
+//    }
+
+
+    public CustomObject(int top, String name, int tweetCount) {
+        this.top = top;
         this.name = name;
-        this.count = count;
+        this.tweetCount = tweetCount;
     }
-//
+
+    public int getTop() {
+        return top;
+    }
+
+    public void setTop(int top) {
+        this.top = top;
+    }
+
+    //
     public String getName() {
         return name;
     }
@@ -56,12 +73,13 @@ public class CustomObject {
 //        this.text = text;
 //    }
 //
-    public int getCount() {
-        return count;
+
+
+    public int getTweetCount() {
+        return tweetCount;
     }
 
-    public void setCount(int count) {
-        this.count = count;
+    public void setTweetCount(int tweetCount) {
+        this.tweetCount = tweetCount;
     }
-
 }

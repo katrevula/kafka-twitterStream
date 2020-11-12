@@ -76,16 +76,17 @@ public class CustomProducer {
 
         while (true) {
             int cc =0;
+             i=1;
             for (Trend trend : trends.getTrends()) {
 
 //                trendingNow = new TrendingNow(trend.getName(),trend.getTweetVolume());
 
-                co = new CustomObject(trend.getName(),trend.getTweetVolume());
-                System.out.println(String.format("Trend "+ i++ +"  %s (tweet_volume: %d)", co.getName(),co.getCount()));
+                co = new CustomObject(i, trend.getName(),trend.getTweetVolume());
+                System.out.println(String.format("Trend "+ i++ +"  %s (tweet_volume: %d)", co.getName(),co.getTweetCount()));
                 ProducerRecord<String, CustomObject> rec = new ProducerRecord<>(topicName, co);
                 producer.send(rec);
             }
-            Thread.sleep(1000);
+            Thread.sleep(10000);
 //            producer.close();
         }
 
