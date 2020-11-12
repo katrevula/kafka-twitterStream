@@ -9,9 +9,7 @@ import twitter4j.conf.ConfigurationBuilder;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Properties;
+import java.util.*;
 
 /**
  * Custom Producer using Kafka for messaging.
@@ -63,82 +61,52 @@ public class CustomProducer {
         System.out.println("\nStarting custom producer..............\n");
 
         Twitter twitter = getTwitterinstance();
-        Trends trends = twitter.getPlaceTrends(1);
-// **************************************************************************************//
-        ResponseList<Location> locations;
-        locations = twitter.getAvailableTrends();
-        System.out.println("Showing available trends");
-        for (Location location : locations) {
-            System.out.println(location.getName() + " (woeid:" + location.getWoeid() + ")");
-        }
-// **************************************************************************************//
 
-        int pageno = 1;
-        int i = 1;
-        List<Status> statuses = new ArrayList<Status>();
-//        try {
-        CustomObject co;
-        TrendingNow trendingNow;
 
+        Map<Integer, String> countries = new LinkedHashMap<>();
+
+        countries.put(1, "	Worldwide 	");
+//        countries.put(23424748, "	Australia 	");
+//        countries.put(23424768, "	Brazil 	");
+//        countries.put(23424775, "	Canada 	");
+//        countries.put(23424819, "	France 	");
+//        countries.put(23424829, "	Germany 	");
+        countries.put(23424848, "	India 	");
+//        countries.put(23424856, "	Japan 	");
+//        countries.put(23424900, "	Mexico 	");
+//        countries.put(23424916, "	New Zealand 	");
+//        countries.put(23424922, "	Pakistan 	");
+//        countries.put(23424936, "	Russia 	");
+//        countries.put(23424938, "	Saudi Arabia 	");
+//        countries.put(23424942, "	South Africa 	");
+//        countries.put(23424948, "	Singapore 	");
+        countries.put(23424975, "	United Kingdom 	");
+        countries.put(23424977, "	United States 	");
 
         while (true) {
-            int cc =0;
-             i=1;
-            for (Trend trend : trends.getTrends()) {
+            for (Map.Entry<Integer, String> country : countries.entrySet()) {
+                Trends trends = twitter.getPlaceTrends(country.getKey());
 
-//                trendingNow = new TrendingNow(trend.getName(),trend.getTweetVolume());
+                int i = 1;
+                List<Status> statuses = new ArrayList<Status>();
 
-                co = new CustomObject(i, trend.getName(),trend.getTweetVolume());
-//                System.out.println(String.format("Trend "+ i++ +"  %s (tweet_volume: %d)", co.getName(),co.getTweetCount()));
-                ProducerRecord<String, CustomObject> rec = new ProducerRecord<>(topicName, co);
-                producer.send(rec);
-            }
-            Thread.sleep(10000);
+                CustomObject co;
+                ResponseList<Location> locations;
+//            while (i <= 50) {
+                for (Trend trend : trends.getTrends()) {
+                    co = new CustomObject(country.getValue(), i++, trend.getName(), trend.getTweetVolume());
+                    System.out.println(String.format("Country Name:" + country.getValue() + "Trend " + (i - 1) + "  %s (tweet_volume: %d)", co.getName(), co.getTweetCount()));
+                    ProducerRecord<String, CustomObject> rec = new ProducerRecord<>(topicName, co);
+                    producer.send(rec);
+
+                }
+//                Thread.sleep(1000);
 //            producer.close();
+//            }
+
+            }
+            Thread.sleep(1000);
         }
-
-//        while (true) {
-//            int cc =0;
-//            for (Trend trend : trends.getTrends()) {
-//
-//                trendingNow = new TrendingNow(trend.getName(),trend.getTweetVolume());
-//
-//                co = new CustomObject(trendingNow);
-//                System.out.println(String.format("Trend "+ i++ +"  %s (tweet_volume: %d)", co.getTrendingNow().getName(),co.getTrendingNow().getVolume()));
-//                ProducerRecord<String, CustomObject> rec = new ProducerRecord<>(topicName, co);
-//                producer.send(rec);
-//            }
-//            Thread.sleep(1000);
-////            producer.close();
-//        }
-
-//        while (true) {
-//            int cc =0;
-//            for (Trend trend : trends.getTrends()) {
-//                co = new CustomObject(trend.getName(), trend.getTweetVolume());
-//                System.out.println(String.format("Trend "+ i++ +"  %s (tweet_volume: %d)", trend.getName(), trend.getTweetVolume()));
-//                ProducerRecord<String, CustomObject> rec = new ProducerRecord<>(topicName, co);
-//                producer.send(rec);
-//            }
-//            Thread.sleep(100);
-////            producer.close();
-//        }
-
-//            Paging page = new Paging(pageno, 2000);
-//            statuses.addAll(twitter.getUserTimeline(user, page));
-//            System.out.println("Total: " + statuses.size());
-//            for (Status status : statuses) {
-//                String s = "@" + status.getUser().getScreenName() + ":" + status.getText();
-//                co = new CustomObject(status.getUser().getScreenName(), status.getText(), status.getText().length());
-//                System.out.println("Posting tweet number " + i++ + ". See Consumer for details.");
-//                ProducerRecord<String, CustomObject> rec = new ProducerRecord<>(topicName, co);
-//                producer.send(rec);
-//                Thread.sleep(delay_ms);
-//            }
-//        } catch (TwitterException e) {
-//            e.printStackTrace();
-//        }
-//        producer.close();
     }
 
     public static Twitter getTwitterinstance() throws IOException {

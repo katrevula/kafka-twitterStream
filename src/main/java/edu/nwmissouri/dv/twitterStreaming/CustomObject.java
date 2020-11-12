@@ -1,18 +1,16 @@
 package edu.nwmissouri.dv.twitterStreaming;
 
 public class CustomObject {
-
+    private String countryName;
     private int top;
     private String name;
-//    private String text;
     private int tweetCount;
-    private String countryName;
 
-    public CustomObject(int top, String name, int tweetCount, String countryName) {
+    public CustomObject(String countryName, int top, String name, int tweetCount) {
+        this.countryName = countryName;
         this.top = top;
         this.name = name;
         this.tweetCount = tweetCount;
-        this.countryName = countryName;
     }
 
     public String getCountryName() {

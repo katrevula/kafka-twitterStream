@@ -98,7 +98,7 @@ public class CustomConsumer {
                     int i = 0;
                     for (ConsumerRecord<String, CustomObject> record : records) {
 
-                        System.out.println("# "+record.value().getTop()+"    Trend: " +record.value().getName() +"  TweetCount: "+record.value().getTweetCount());
+                        System.out.println("Country Name:"+record.value().getCountryName()+"  # "+record.value().getTop()+"    Trend: " +record.value().getName() +"  TweetCount: "+record.value().getTweetCount());
 //                        System.out.println("************"+record.value().toString());
 
                         objectMapper = new ObjectMapper();
