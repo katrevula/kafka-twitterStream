@@ -86,24 +86,17 @@ public class CustomProducer {
         while (true) {
             for (Map.Entry<Integer, String> country : countries.entrySet()) {
                 Trends trends = twitter.getPlaceTrends(country.getKey());
-
                 int i = 1;
-                List<Status> statuses = new ArrayList<Status>();
-
                 CustomObject co;
                 ResponseList<Location> locations;
-//            while (i <= 50) {
                 for (Trend trend : trends.getTrends()) {
                     co = new CustomObject(country.getValue(), i++, trend.getName(), trend.getTweetVolume());
                     System.out.println(String.format("Country Name:" + country.getValue() + "Trend " + (i - 1) + "  %s (tweet_volume: %d)", co.getName(), co.getTweetCount()));
                     ProducerRecord<String, CustomObject> rec = new ProducerRecord<>(topicName, co);
                     producer.send(rec);
-
                 }
 //                Thread.sleep(1000);
 //            producer.close();
-//            }
-
             }
             Thread.sleep(1000);
         }

@@ -2,13 +2,13 @@ package edu.nwmissouri.dv.twitterStreaming;
 
 public class CustomObject {
     private String countryName;
-    private int top;
+    private int position;
     private String name;
     private int tweetCount;
 
     public CustomObject(String countryName, int top, String name, int tweetCount) {
         this.countryName = countryName;
-        this.top = top;
+        this.position = top;
         this.name = name;
         this.tweetCount = tweetCount;
     }
@@ -57,17 +57,17 @@ public class CustomObject {
 
 
     public CustomObject(int top, String name, int tweetCount) {
-        this.top = top;
+        this.position = top;
         this.name = name;
         this.tweetCount = tweetCount;
     }
 
-    public int getTop() {
-        return top;
+    public int getPosition() {
+        return position;
     }
 
-    public void setTop(int top) {
-        this.top = top;
+    public void setPosition(int position) {
+        this.position = position;
     }
 
     //
