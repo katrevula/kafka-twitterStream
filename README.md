@@ -12,6 +12,7 @@
 * Click on the create app button under the Standlone Apps 
 * Fill the details os the app and create an app
 * After successfully creating the app, go to keys and tokens tab and generate keys
+* Copy and paste teh keys for future use
 
 #### Example keys & Tokens
 
