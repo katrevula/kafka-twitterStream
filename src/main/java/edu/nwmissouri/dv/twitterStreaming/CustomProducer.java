@@ -74,21 +74,35 @@ public class CustomProducer {
         TrendingNow trendingNow;
 
 
-
         while (true) {
             int cc =0;
             for (Trend trend : trends.getTrends()) {
 
-                trendingNow = new TrendingNow(trend.getName(),trend.getTweetVolume());
+//                trendingNow = new TrendingNow(trend.getName(),trend.getTweetVolume());
 
-                co = new CustomObject(trendingNow);
-                System.out.println(String.format("Trend "+ i++ +"  %s (tweet_volume: %d)", co.getTrendingNow().getName(),co.getTrendingNow().getVolume()));
+                co = new CustomObject(trend.getName(),trend.getTweetVolume());
+                System.out.println(String.format("Trend "+ i++ +"  %s (tweet_volume: %d)", co.getName(),co.getCount()));
                 ProducerRecord<String, CustomObject> rec = new ProducerRecord<>(topicName, co);
                 producer.send(rec);
             }
             Thread.sleep(1000);
 //            producer.close();
         }
+
+//        while (true) {
+//            int cc =0;
+//            for (Trend trend : trends.getTrends()) {
+//
+//                trendingNow = new TrendingNow(trend.getName(),trend.getTweetVolume());
+//
+//                co = new CustomObject(trendingNow);
+//                System.out.println(String.format("Trend "+ i++ +"  %s (tweet_volume: %d)", co.getTrendingNow().getName(),co.getTrendingNow().getVolume()));
+//                ProducerRecord<String, CustomObject> rec = new ProducerRecord<>(topicName, co);
+//                producer.send(rec);
+//            }
+//            Thread.sleep(1000);
+////            producer.close();
+//        }
 
 //        while (true) {
 //            int cc =0;
