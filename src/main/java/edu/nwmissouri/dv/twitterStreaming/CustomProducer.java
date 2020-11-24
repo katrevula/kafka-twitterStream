@@ -90,15 +90,16 @@ public class CustomProducer {
                 CustomObject co;
                 ResponseList<Location> locations;
                 for (Trend trend : trends.getTrends()) {
-                    co = new CustomObject(country.getValue(), i++, trend.getName(), trend.getTweetVolume());
-                    System.out.println(String.format("Country Name:" + country.getValue() + "Trend " + (i - 1) + "  %s (tweet_volume: %d)", co.getName(), co.getTweetCount()));
+                    co = new CustomObject(country.getValue(), i, trend.getName(), trend.getTweetVolume());
+                    System.out.println(String.format("Country Name:" + country.getValue() + "Trend " + (i) + "  %s (tweet_volume: %d)", co.getName(), co.getTweetCount()));
                     ProducerRecord<String, CustomObject> rec = new ProducerRecord<>(topicName, co);
                     producer.send(rec);
+                    i++;
                 }
 //                Thread.sleep(1000);
 //            producer.close();
             }
-            Thread.sleep(1000);
+            Thread.sleep(120000);
         }
     }
 
