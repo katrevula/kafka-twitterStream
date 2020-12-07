@@ -8,6 +8,9 @@ import twitter_cred
 import numpy as np
 import pandas as pd
 import re
+from tweepy import Cursor
+from sklearn.metrics import accuracy_score
+import matplotlib.pyplot as plt
 pd.set_option('display.width', 1000)
 pd.set_option("display.max_columns", 100)
 
@@ -165,8 +168,55 @@ if __name__ == '__main__':
     df['sentiment'] = np.array([tweet_analyzer.analyze_sentiment(tweet) for tweet in df['tweets']])
     df['mySentiment'] = np.array([tweet_analyzer.my_sentiment_analyser(tweet) for tweet in df['tweets']])
 
+    # for accuracy calculation
+    accuracy = int(accuracy_score(df['sentiment'], df['mySentiment']) * 100)
+    acc = str(accuracy)
 
+    # for visualization and comparing both outputs
+    positiveCount = 0
+    negativeCount = 0
+    neutralCount = 0
+    for value in df['sentiment']:
+        if value == 0:
+            neutralCount = neutralCount + 1
+        elif value == 1:
+            positiveCount = positiveCount + 1
+        else:
+            negativeCount = negativeCount + 1
+    # print("Positive Count: ", positiveCount)
+    # print("Negative Count: ", negativeCount)
+    # print("Neutral Count: ", neutralCount)
 
+    myPositiveCount = 0
+    myNegativeCount = 0
+    myNeutralCount = 0
+    for value in df['mySentiment']:
+        if value == 0:
+            myNeutralCount = myNeutralCount + 1
+        elif value == 1:
+            myPositiveCount = myPositiveCount + 1
+        else:
+            myNegativeCount = myNegativeCount + 1
 
-    print(df.head(50)) # to print whole dataframe
+    myValues = [myPositiveCount, myNeutralCount, myNegativeCount]
+    orgValues = [positiveCount, neutralCount, negativeCount]
+
+    index = np.arange(3)
+    bar_width = 0.25
+
+    fig, ax = plt.subplots()
+    myValuesBar = ax.bar(index, myValues, bar_width, label="manual calculation")
+    orgValuesBar = ax.bar(index + bar_width, orgValues, bar_width, label="using Textblob")
+    ax.set_xlabel('Sentiment values')
+    ax.set_ylabel('Count')
+    ax.set_title('Sentiment analysis on latest 50 tweets. Accuracy: ' + acc + '%')
+    ax.set_xticks(index + bar_width / 2)
+    ax.set_xticklabels(["positive", "neutral", "negative"])
+    ax.get_children()[0].set_color('g')
+    ax.get_children()[1].set_color('b')
+    ax.get_children()[2].set_color('r')
+    ax.legend()
+    plt.show()
+
+    # print(df.head(50)) # to print whole dataframe
 
