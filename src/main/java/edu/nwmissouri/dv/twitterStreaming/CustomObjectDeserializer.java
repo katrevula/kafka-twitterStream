@@ -7,7 +7,7 @@ import org.apache.kafka.common.serialization.Deserializer;
 import java.nio.charset.StandardCharsets;
 import java.util.Map;
 
-public class KafkaJsonDeserializer implements Deserializer<CustomObject> {
+public class CustomObjectDeserializer implements Deserializer<CustomObject> {
     @Override
     public void configure(Map<String, ?> s, boolean arg1) {
     }
