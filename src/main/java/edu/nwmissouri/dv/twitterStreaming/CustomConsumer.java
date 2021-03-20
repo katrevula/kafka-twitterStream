@@ -30,7 +30,7 @@ public class CustomConsumer {
     public static void main(String[] argv) throws Exception {
         // Create an input stream for the run properties ................
         String runFile = System.getProperty("user.dir") + File.separator + "src" + File.separator + "main" + File.separator
-                + "resources" + File.separator + "consumer1.properties";
+                + "resources" + File.separator + "consumer.properties";
         System.out.println("Reading config from " + runFile);
         runStream = new FileInputStream(runFile);
 
